@@ -36,7 +36,7 @@ loader.load(
     if (object) {
       // object.scale.set(8,8,8); 
 
-      object.position.y = -8; 
+      object.position.y = -7; 
 
       
     }

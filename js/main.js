@@ -31,6 +31,11 @@ loader.load(
       object.position.y = -7;
     }
     scene.add(object);
+
+    // Start the animation after 2 seconds
+    // setTimeout(() => {
+    //   animate();
+    // }, 3000);
   },
   function (xhr) {
     console.log((xhr.loaded / xhr.total * 100) + '% loaded');
@@ -120,46 +125,30 @@ document.onmousemove = (e) => {
   mouseY = e.clientY;
 }
 
+// Add an event listener to the "Switch Camera" button
+const switchCameraButton = document.getElementById("switchCameraButton");
+switchCameraButton.addEventListener('click', switchCamera);
+
+let currentCameraFacingMode = "user"; // Default to front camera
+
 // Function to switch between front and back cameras
 function switchCamera() {
-  const videoTracks = videoElement.srcObject.getVideoTracks();
-  videoTracks[0].enabled = !videoTracks[0].enabled;
+  currentCameraFacingMode = (currentCameraFacingMode === "user") ? "environment" : "user";
+
+  // Stop the current camera stream
+  const stream = videoElement.srcObject;
+  if (stream) {
+    const tracks = stream.getTracks();
+    tracks.forEach(track => track.stop());
+  }
+
+  // Get the new camera stream based on facing mode
+  navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: currentCameraFacingMode } } })
+    .then(function (newStream) {
+      videoElement.srcObject = newStream;
+      videoElement.play();
+    })
+    .catch(function (error) {
+      console.error('Error switching camera:', error);
+    });
 }
-
-// Function to render the model on the canvas
-const modelCanvas = document.createElement('canvas');
-modelCanvas.width = window.innerWidth;
-modelCanvas.height = window.innerHeight;
-const modelContext = modelCanvas.getContext('2d');
-
-function renderModelOnCanvas() {
-  renderer.render(scene, camera);
-}
-
-// Function to capture a photo with the model
-function capturePhotoWithModel() {
-  modelContext.clearRect(0, 0, modelCanvas.width, modelCanvas.height);
-  renderModelOnCanvas();
-
-  const videoWidth = videoElement.videoWidth;
-  const videoHeight = videoElement.videoHeight;
-  const canvas = document.createElement('canvas');
-  canvas.width = videoWidth;
-  canvas.height = videoHeight;
-  const context = canvas.getContext('2d');
-  context.drawImage(videoElement, 0, 0, videoWidth, videoHeight);
-
-  modelContext.drawImage(renderer.domElement, 0, 0, window.innerWidth, window.innerHeight);
-  context.drawImage(modelCanvas, 0, 0, videoWidth, videoHeight);
-
-  const a = document.createElement('a');
-  a.href = canvas.toDataURL('image/png');
-  a.download = 'captured-photo-with-model.png';
-  a.click();
-}
-
-// Event listeners for buttons
-document.getElementById("switchCameraButton").addEventListener('click', switchCamera);
-document.getElementById("capturePhotoButton").addEventListener('click', capturePhotoWithModel);
-
-animate();

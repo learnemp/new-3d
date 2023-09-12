@@ -1,107 +1,128 @@
-// Import the THREE.js library
 import * as THREE from "https://cdn.skypack.dev/three@0.129.0/build/three.module.js";
-// To allow for the camera to move around the scene
 import { OrbitControls } from "https://cdn.skypack.dev/three@0.129.0/examples/jsm/controls/OrbitControls.js";
-// To allow for importing the .gltf file
 import { GLTFLoader } from "https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/GLTFLoader.js";
 
-// Create a Three.JS Scene
 const scene = new THREE.Scene();
-// Create a new camera with positions and angles
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-// Keep track of the mouse position, so we can make the eye move
 let mouseX = window.innerWidth / 2;
 let mouseY = window.innerHeight / 2;
-
-// Keep the 3D object on a global variable so we can access it later
 let object;
-
-// OrbitControls allow the camera to move around the scene
 let controls;
-
-// Set which object to render
 let objToRender = 'Avatar';
+let mixer; // AnimationMixer
 
-// Instantiate a loader for the .gltf file
 const loader = new GLTFLoader();
 
-// Load the file
 loader.load(
   `models/${objToRender}/Avatar.gltf`,
   function (gltf) {
-    // If the file is loaded, add it to the scene
     object = gltf.scene;
-    // Scale the loaded object (increase its size)
+
+    const animations = gltf.animations;
+    if (animations && animations.length > 0) {
+      mixer = new THREE.AnimationMixer(object);
+      animations.forEach((clip) => {
+        mixer.clipAction(clip).play();
+      });
+    }
+
     if (object) {
-      // object.scale.set(8,8,8); 
-
-      object.position.y = -7; 
-
-      
+      object.position.y = -7;
     }
     scene.add(object);
+
+    // Start the animation after 2 seconds
+    // setTimeout(() => {
+    //   animate();
+    // }, 3000);
   },
   function (xhr) {
-    // While it is loading, log the progress
     console.log((xhr.loaded / xhr.total * 100) + '% loaded');
   },
   function (error) {
-    // If there is an error, log it
     console.error(error);
   }
 );
 
-// Instantiate a new renderer and set its size
-const renderer = new THREE.WebGLRenderer({ alpha: true }); // Alpha: true allows for the transparent background
+const renderer = new THREE.WebGLRenderer({ alpha: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
-
-// Add the renderer to the DOM
 document.getElementById("container3D").appendChild(renderer.domElement);
 
-// Set how far the camera will be from the 3D model
 camera.position.z = objToRender === "Avatar" ? 25 : 500;
 
-// Add lights to the scene, so we can actually see the 3D model
-const topLight = new THREE.DirectionalLight(0xffffff, 1); // (color, intensity)
-topLight.position.set(500, 500, 500); // top-left-ish
+const topLight = new THREE.DirectionalLight(0xffffff, 1);
+topLight.position.set(500, 500, 500);
 topLight.castShadow = true;
 scene.add(topLight);
 
 const ambientLight = new THREE.AmbientLight(0x333333, objToRender === "Avatar" ? 5 : 1);
 scene.add(ambientLight);
 
-// This adds controls to the camera, so we can rotate / zoom it with the mouse
+// Create a video element to capture the camera feed
+const videoElement = document.createElement('video');
+videoElement.autoplay = true;
+videoElement.playsInline = true;
+videoElement.style.position = "absolute";
+videoElement.style.top = "0";
+videoElement.style.left = "0";
+videoElement.style.width = "100%";
+videoElement.style.height = "100%";
+videoElement.style.objectFit = "cover";
+videoElement.style.zIndex = "-1";
+document.body.appendChild(videoElement);
+
+// Function to start the camera feed
+function startCamera() {
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(function (stream) {
+      videoElement.srcObject = stream;
+      videoElement.play();
+    })
+    .catch(function (error) {
+      console.error('Error starting camera:', error);
+    });
+}
+
+// Start the camera feed immediately
+startCamera();
+
 if (objToRender === "Avatar") {
   controls = new OrbitControls(camera, renderer.domElement);
 }
 
-// Render the scene
-function animate() {
-  requestAnimationFrame(animate);
-  // Here we could add some code to update the scene, adding some automatic movement
+// Set a variable to track if the animation should start
+let animationStarted = false;
 
-  // // Make the eye move
-  // if (object && objToRender === "eye") {
-  //   // I've played with the constants here until it looked good
-  //   object.rotation.y = -3 + mouseX / window.innerWidth * 3;
-  //   object.rotation.x = -1.2 + mouseY * 2.5 / window.innerHeight;
-  // }
+function animate() {
+  if (!animationStarted) {
+    // If the animation hasn't started yet, do nothing and return
+    return;
+  }
+
+  requestAnimationFrame(animate);
+  if (mixer) {
+    mixer.update(0.01); // You can adjust the time delta as needed
+  }
+
   renderer.render(scene, camera);
 }
 
-// Add a listener to the window, so we can resize the window and the camera
+// Delay the animation for 2 seconds (2000 milliseconds)
+setTimeout(() => {
+  animationStarted = true;
+  animate();
+}, 3000);
+
 window.addEventListener("resize", function () {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-// Add mouse position listener, so we can make the eye move
 document.onmousemove = (e) => {
   mouseX = e.clientX;
   mouseY = e.clientY;
 }
 
-// Start the 3D rendering
 animate();

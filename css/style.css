@@ -28,7 +28,7 @@ header h1 {
 #buttonContainerTopRight {
   position: fixed;
   top: 120px;
-  right: 30px;
+  right: 40px;
   display: flex;
   flex-direction: column;
   align-items: flex-end; /* Align buttons to the right */
@@ -47,6 +47,6 @@ header h1 {
 }
 
 #buttonContainerTopRight img {
-  width: 60px; /* Adjust the size of the images as needed */
-  height: 60px;
+  width: 80px; /* Adjust the size of the images as needed */
+  height: 80px;
 }

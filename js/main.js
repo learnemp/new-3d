@@ -34,10 +34,9 @@ loader.load(
     object = gltf.scene;
     // Scale the loaded object (increase its size)
     if (object) {
-      object.scale.set(8,8,8); // This scales the object in all three dimensions (x, y, z)
+      // object.scale.set(8,8,8); 
 
-      // Move the object slightly down along the y-axis
-      object.position.y = -5; // Adjust the value as needed
+      object.position.y = -8; 
 
       
     }

@@ -78,10 +78,6 @@ function startCamera() {
     .then(function (stream) {
       videoElement.srcObject = stream;
       videoElement.play();
-
-       // Set the video element's aspect ratio to match the window's aspect ratio
-      videoElement.setAttribute("width", window.innerWidth);
-      videoElement.setAttribute("height", window.innerHeight);
     })
     .catch(function (error) {
       console.error('Error starting camera:', error);
@@ -129,4 +125,30 @@ document.onmousemove = (e) => {
   mouseY = e.clientY;
 }
 
-animate();
+// Add an event listener to the "Switch Camera" button
+const switchCameraButton = document.getElementById("switchCameraButton");
+switchCameraButton.addEventListener('click', switchCamera);
+
+let currentCameraFacingMode = "user"; // Default to front camera
+
+// Function to switch between front and back cameras
+function switchCamera() {
+  currentCameraFacingMode = (currentCameraFacingMode === "user") ? "environment" : "user";
+
+  // Stop the current camera stream
+  const stream = videoElement.srcObject;
+  if (stream) {
+    const tracks = stream.getTracks();
+    tracks.forEach(track => track.stop());
+  }
+
+  // Get the new camera stream based on facing mode
+  navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: currentCameraFacingMode } } })
+    .then(function (newStream) {
+      videoElement.srcObject = newStream;
+      videoElement.play();
+    })
+    .catch(function (error) {
+      console.error('Error switching camera:', error);
+    });
+}

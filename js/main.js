@@ -78,6 +78,10 @@ function startCamera() {
     .then(function (stream) {
       videoElement.srcObject = stream;
       videoElement.play();
+
+       // Set the video element's aspect ratio to match the window's aspect ratio
+      videoElement.setAttribute("width", window.innerWidth);
+      videoElement.setAttribute("height", window.innerHeight);
     })
     .catch(function (error) {
       console.error('Error starting camera:', error);

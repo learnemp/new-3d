@@ -31,11 +31,6 @@ loader.load(
       object.position.y = -7;
     }
     scene.add(object);
-
-    // Start the animation after 2 seconds
-    // setTimeout(() => {
-    //   animate();
-    // }, 3000);
   },
   function (xhr) {
     console.log((xhr.loaded / xhr.total * 100) + '% loaded');
@@ -152,3 +147,46 @@ function switchCamera() {
       console.error('Error switching camera:', error);
     });
 }
+
+// Function to capture a photo with the model and camera feed
+function capturePhotoWithModel() {
+  // Create a canvas to hold the camera feed
+  const cameraCanvas = document.createElement('canvas');
+  cameraCanvas.width = videoElement.videoWidth;
+  cameraCanvas.height = videoElement.videoHeight;
+  const cameraContext = cameraCanvas.getContext('2d');
+  cameraContext.drawImage(videoElement, 0, 0, cameraCanvas.width, cameraCanvas.height);
+
+  // Render the 3D model onto the main canvas
+  renderer.render(scene, camera);
+
+  // Composite the camera feed and the 3D model
+  cameraContext.drawImage(renderer.domElement, 0, 0);
+
+  // Crop the image to remove unwanted parts (adjust these values as needed)
+  const cropX = 0;
+  const cropY = 0;
+  const cropWidth = cameraCanvas.width;
+  const cropHeight = cameraCanvas.height - 100; // Adjust to remove the bottom part
+
+  // Create a cropped canvas
+  const croppedCanvas = document.createElement('canvas');
+  croppedCanvas.width = cropWidth;
+  croppedCanvas.height = cropHeight;
+  const croppedContext = croppedCanvas.getContext('2d');
+
+  // Crop the image
+  croppedContext.drawImage(cameraCanvas, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
+
+  // Create a download link for the captured photo
+  const a = document.createElement('a');
+  a.href = croppedCanvas.toDataURL('image/png');
+  a.download = 'captured-photo-with-model.png';
+  a.click();
+}
+
+// Add an event listener to the "Capture Photo" button
+const capturePhotoButton = document.getElementById("capturePhotoButton");
+capturePhotoButton.addEventListener('click', capturePhotoWithModel);
+
+animate();

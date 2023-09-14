@@ -31,6 +31,11 @@ loader.load(
       object.position.y = -7;
     }
     scene.add(object);
+
+    // Start the animation after 2 seconds
+    // setTimeout(() => {
+    //   animate();
+    // }, 3000);
   },
   function (xhr) {
     console.log((xhr.loaded / xhr.total * 100) + '% loaded');
@@ -97,7 +102,7 @@ function animate() {
 
   requestAnimationFrame(animate);
   if (mixer) {
-    mixer.update(0.01); // You can adjust the time delta as needed
+    mixer.update(0.014); // You can adjust the time delta as needed
   }
 
   renderer.render(scene, camera);
@@ -148,45 +153,91 @@ function switchCamera() {
     });
 }
 
-// Function to capture a photo with the model and camera feed
-function capturePhotoWithModel() {
-  // Create a canvas to hold the camera feed
-  const cameraCanvas = document.createElement('canvas');
-  cameraCanvas.width = videoElement.videoWidth;
-  cameraCanvas.height = videoElement.videoHeight;
-  const cameraContext = cameraCanvas.getContext('2d');
-  cameraContext.drawImage(videoElement, 0, 0, cameraCanvas.width, cameraCanvas.height);
+// Add event listeners for screen recording
+const recordVideoButton = document.getElementById("recordVideoButton");
+const stopRecordingButton = document.createElement("button");
+stopRecordingButton.id = "stopRecordingButton";
+stopRecordingButton.textContent = "Stop Recording";
+stopRecordingButton.style.display = "none";
 
-  // Render the 3D model onto the main canvas
-  renderer.render(scene, camera);
+recordVideoButton.addEventListener("click", startRecording);
+stopRecordingButton.addEventListener("click", stopRecording);
 
-  // Composite the camera feed and the 3D model
-  cameraContext.drawImage(renderer.domElement, 0, 0);
+document.getElementById("buttonContainerBottom").appendChild(stopRecordingButton);
 
-  // Crop the image to remove unwanted parts (adjust these values as needed)
-  const cropX = 0;
-  const cropY = 0;
-  const cropWidth = cameraCanvas.width;
-  const cropHeight = cameraCanvas.height - 100; // Adjust to remove the bottom part
+let mediaRecorder;
+let recordedChunks = [];
 
-  // Create a cropped canvas
-  const croppedCanvas = document.createElement('canvas');
-  croppedCanvas.width = cropWidth;
-  croppedCanvas.height = cropHeight;
-  const croppedContext = croppedCanvas.getContext('2d');
+function startRecording() {
+  if (typeof mediaRecorder === "undefined" || mediaRecorder.state === "inactive") {
+    mediaRecorder = new MediaRecorder(videoElement.srcObject);
+    recordedChunks = [];
 
-  // Crop the image
-  croppedContext.drawImage(cameraCanvas, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
+    mediaRecorder.ondataavailable = function (event) {
+      if (event.data.size > 0) {
+        recordedChunks.push(event.data);
+      }
+    };
 
-  // Create a download link for the captured photo
+    mediaRecorder.onstop = function () {
+      const blob = new Blob(recordedChunks, { type: 'video/webm' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'recorded-video.webm';
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+    };
+
+    mediaRecorder.start();
+    recordVideoButton.style.display = 'none';
+    stopRecordingButton.style.display = 'block';
+  }
+}
+
+function stopRecording() {
+  if (mediaRecorder && mediaRecorder.state !== "inactive") {
+    mediaRecorder.stop();
+    recordVideoButton.style.display = 'block';
+    stopRecordingButton.style.display = 'none';
+  }
+}
+
+
+// Create a screenshot button element
+const screenshotButton = document.getElementById("screenshotButton");
+
+// Add an event listener to the screenshot button
+screenshotButton.addEventListener('click', captureScreenshot);
+
+// Create a canvas element to render the screenshot
+const screenshotCanvas = document.createElement('canvas');
+screenshotCanvas.width = window.innerWidth;
+screenshotCanvas.height = window.innerHeight;
+const screenshotContext = screenshotCanvas.getContext('2d');
+
+// Function to capture a screenshot
+function captureScreenshot() {
+  // Clear the screenshot canvas
+  screenshotContext.clearRect(0, 0, screenshotCanvas.width, screenshotCanvas.height);
+
+  // Render the camera feed
+  screenshotContext.drawImage(videoElement, 0, 0, window.innerWidth, window.innerHeight);
+
+  // Render the 3D model
+  renderModelOnCanvas(screenshotContext);
+
+  // Create a download link for the screenshot
   const a = document.createElement('a');
-  a.href = croppedCanvas.toDataURL('image/png');
-  a.download = 'captured-photo-with-model.png';
+  a.href = screenshotCanvas.toDataURL('image/png');
+  a.download = 'screenshot.png';
   a.click();
 }
 
-// Add an event listener to the "Capture Photo" button
-const capturePhotoButton = document.getElementById("capturePhotoButton");
-capturePhotoButton.addEventListener('click', capturePhotoWithModel);
-
-animate();
+// Function to render the model on the given canvas context
+function renderModelOnCanvas(context) {
+  renderer.render(scene, camera);
+  context.drawImage(renderer.domElement, 0, 0, window.innerWidth, window.innerHeight);
+}

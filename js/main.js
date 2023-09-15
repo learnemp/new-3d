@@ -279,7 +279,7 @@ function renderAdditionalElements(context) {
 
 // Footer
 context.fillStyle = "white"; // Set background color
-context.fillRect(0, window.innerHeight - 200, window.innerWidth, 200); // Draw a background rectangle
+context.fillRect(0, window.innerHeight - 200, window.innerWidth, 100); // Draw a background rectangle
 
 // Footer Text
 const footerText = "I support for a world where deaf people everywhere";

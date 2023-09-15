@@ -265,8 +265,6 @@ function renderAdditionalElements(context) {
     context.drawImage(logoImage, 10, 10, 90, 90); // Adjust the position and size as needed
   };
 
-  
-
   // Header Text
   context.fillStyle = "orangered"; // Set text color
   context.font = "5em 'Arial'"; // Set font size and family
@@ -277,24 +275,26 @@ function renderAdditionalElements(context) {
   
   context.fillText(headerText, centerX, 90);
 
+  // Footer
+  context.fillStyle = "white"; // Set background color
 
-// Footer
-context.fillStyle = "white"; // Set background color
-context.fillRect(0, window.innerHeight - 150, window.innerWidth, 150); // Draw a background rectangle
+  // Increase the height of the footer
+  const footerHeight = 200;
+  context.fillRect(0, window.innerHeight - footerHeight, window.innerWidth, footerHeight); // Draw a background rectangle
 
-// Footer Text
-const footerText = "I support for a world where deaf people everywhere";
-const footerText2 = "can sign anywhere!";
-const footerTextWidth = context.measureText(footerText).width;
-const footerText2Width = context.measureText(footerText2).width;
+  // Footer Text
+  const footerText = "I support for a world where deaf people everywhere";
+  const footerText2 = "can sign anywhere!";
+  const footerTextWidth = context.measureText(footerText).width;
+  const footerText2Width = context.measureText(footerText2).width;
 
-// Calculate the center for each line of text
-const footerCenterX = (window.innerWidth - footerTextWidth) / 2;
-const footerCenterX2 = (window.innerWidth - footerText2Width) / 2;
+  // Calculate the center for each line of text
+  const footerCenterX = (window.innerWidth - footerTextWidth) / 2;
+  const footerCenterX2 = (window.innerWidth - footerText2Width) / 2;
 
-context.fillStyle = "orangered"; // Set text color for footer
-context.font = "5em 'Arial'";
-context.fillText(footerText, footerCenterX, window.innerHeight - 90); // Center the first line of footer text horizontally
-context.fillText(footerText2, footerCenterX2, window.innerHeight - 30); // Center the second line of footer text horizontally
-
+  context.fillStyle = "orangered"; // Set text color for footer
+  context.font = "5em 'Arial'";
+  context.fillText(footerText, footerCenterX, window.innerHeight - 120); // Center the first line of footer text horizontally
+  context.fillText(footerText2, footerCenterX2, window.innerHeight - 60); // Center the second line of footer text horizontally
 }
+

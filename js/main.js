@@ -277,21 +277,21 @@ function renderAdditionalElements(context) {
   
   context.fillText(headerText, centerX, 90);
 
-  // Footer
-  context.fillStyle = "white"; // Set background color
-  context.fillRect(0, window.innerHeight - 200, window.innerWidth, 200); // Draw a background rectangle
+// Footer
+context.fillStyle = "white"; // Set background color
+context.fillRect(0, window.innerHeight - 200, window.innerWidth, 200); // Draw a background rectangle
 
-  // Footer Text
-  const footerText = "I support for a world where deaf people everywhere";
-  const footerText2 = "can sign anywhere!";
-  const footerTextWidth = context.measureText(footerText).width;
-  const footerCenterX = (window.innerWidth - footerTextWidth) / 2;
+// Footer Text
+const footerText = "I support for a world where deaf people everywhere";
+const footerText2 = "can sign anywhere!";
+const footerTextWidth = context.measureText(footerText).width;
+const footerText2Width = context.measureText(footerText2).width;
 
-  const footerText2Width = context.measureText(footerText2).width;
-  const footerCenterX2 = (window.innerWidth - footerText2Width) / 2;
+const widestTextWidth = Math.max(footerTextWidth, footerText2Width);
+const footerCenterX = (window.innerWidth - widestTextWidth) / 2;
 
-  context.fillStyle = "orangered"; // Set text color for footer
-  context.font = "4em 'Arial'";
-  context.fillText(footerText, footerCenterX, window.innerHeight - 120); // Center the footer text horizontally
-  context.fillText(footerText2, footerCenterX2, window.innerHeight - 60); // Center the second line of footer text horizontally
-}
+context.fillStyle = "orangered"; // Set text color for footer
+context.font = "4em 'Arial'";
+context.fillText(footerText, footerCenterX, window.innerHeight - 120); // Center the footer text horizontally
+context.fillText(footerText2, footerCenterX, window.innerHeight - 60); // Center the second line of footer text horizontally
+

@@ -229,6 +229,12 @@ function captureScreenshot() {
   // Render the 3D model
   renderModelOnCanvas(screenshotContext);
 
+
+  
+  // Render additional elements (header and footer)
+  renderAdditionalElements(screenshotContext);
+
+
   // Create a download link for the screenshot
   const a = document.createElement('a');
   a.href = screenshotCanvas.toDataURL('image/png');
@@ -236,8 +242,48 @@ function captureScreenshot() {
   a.click();
 }
 
+
 // Function to render the model on the given canvas context
 function renderModelOnCanvas(context) {
   renderer.render(scene, camera);
   context.drawImage(renderer.domElement, 0, 0, window.innerWidth, window.innerHeight);
+}
+
+
+
+
+// Function to render additional elements on the canvas
+function renderAdditionalElements(context) {
+  // Header
+  context.fillStyle = "#ffffff"; // Set background color
+  context.fillRect(0, 0, window.innerWidth, 100); // Draw a background rectangle
+
+  // Logo
+  const logoImage = new Image();
+  logoImage.src = "./logo.jpg";
+  logoImage.onload = () => {
+    context.drawImage(logoImage, 10, 10, 90, 90); // Adjust the position and size as needed
+  };
+
+  // Header Text
+  context.fillStyle = "orangered"; // Set text color
+  context.font = "2em 'Arial'"; // Set font size and family
+
+  const headerText = "International week for the deaf!";
+  const textWidth = context.measureText(headerText).width;
+  const centerX = (window.innerWidth - textWidth) / 2;
+  
+  context.fillText(headerText, centerX, 60);
+
+  // Footer
+  context.fillStyle = "white"; // Set background color
+  context.fillRect(0, window.innerHeight - 100, window.innerWidth, 100); // Draw a background rectangle
+
+  // Footer Text
+  const footerText = "I support for a world where deaf people everywhere can sign anywhere!";
+  const footerTextWidth = context.measureText(footerText).width;
+  const footerCenterX = (window.innerWidth - footerTextWidth) / 2;
+
+  context.fillStyle = "orangered"; // Set text color for footer
+  context.fillText(footerText, footerCenterX, window.innerHeight - 20); // Center the footer text horizontally
 }

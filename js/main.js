@@ -267,7 +267,7 @@ function renderAdditionalElements(context) {
 
   // Header Text
   context.fillStyle = "orangered"; // Set text color
-  context.font = "4.5em 'Arial'"; // Set font size and family
+  context.font = "4em 'Arial'"; // Set font size and family
 
   const headerText = "International week for the deaf!";
   const textWidth = context.measureText(headerText).width;
@@ -293,7 +293,7 @@ function renderAdditionalElements(context) {
   const footerCenterX2 = (window.innerWidth - footerText2Width) / 2;
 
   context.fillStyle = "orangered"; // Set text color for footer
-  context.font = "4.5em 'Arial'";
+  context.font = "4em 'Arial'";
   context.fillText(footerText, footerCenterX, window.innerHeight - 120); // Center the first line of footer text horizontally
   context.fillText(footerText2, footerCenterX2, window.innerHeight - 60); // Center the second line of footer text horizontally
 }

@@ -279,7 +279,7 @@ function renderAdditionalElements(context) {
 
 // Footer
 context.fillStyle = "white"; // Set background color
-context.fillRect(0, window.innerHeight - 200, window.innerWidth, 100); // Draw a background rectangle
+context.fillRect(0, window.innerHeight - 200, window.innerWidth, 200); // Draw a background rectangle
 
 // Footer Text
 const footerText = "I support for a world where deaf people everywhere";
@@ -292,6 +292,6 @@ const footerCenterX = (window.innerWidth - widestTextWidth) / 2;
 
 context.fillStyle = "orangered"; // Set text color for footer
 context.font = "4em 'Arial'";
-context.fillText(footerText, footerCenterX, window.innerHeight - 120); // Center the footer text horizontally
-context.fillText(footerText2, footerCenterX, window.innerHeight - 60); // Center the second line of footer text horizontally
+context.fillText(footerText, footerCenterX, window.innerHeight - 90); // Center the footer text horizontally
+context.fillText(footerText2, footerCenterX, window.innerHeight - 45); // Center the second line of footer text horizontally
 }

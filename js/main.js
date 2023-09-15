@@ -267,7 +267,7 @@ function renderAdditionalElements(context) {
 
   // Header Text
   context.fillStyle = "orangered"; // Set text color
-  context.font = "4em 'Arial'"; // Set font size and family
+  context.font = "5em 'Arial'"; // Set font size and family
 
   const headerText = "International week for the deaf!";
   const textWidth = context.measureText(headerText).width;

@@ -269,7 +269,7 @@ function renderAdditionalElements(context) {
 
   // Header Text
   context.fillStyle = "orangered"; // Set text color
-  context.font = "4em 'Arial'"; // Set font size and family
+  context.font = "5em 'Arial'"; // Set font size and family
 
   const headerText = "International week for the deaf!";
   const textWidth = context.measureText(headerText).width;
@@ -279,7 +279,7 @@ function renderAdditionalElements(context) {
 
   // Footer
   context.fillStyle = "white"; // Set background color
-  context.fillRect(0, window.innerHeight - 100, window.innerWidth, 200); // Draw a background rectangle
+  context.fillRect(0, window.innerHeight - 200, window.innerWidth, 200); // Draw a background rectangle
 
   // Footer Text
   const footerText = "I support for a world where deaf people everywhere";

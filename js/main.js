@@ -293,7 +293,7 @@ const footerCenterX = (window.innerWidth - footerTextWidth) / 2;
 const footerCenterX2 = (window.innerWidth - footerText2Width) / 2;
 
 context.fillStyle = "orangered"; // Set text color for footer
-context.font = "4em 'Arial'";
+context.font = "5em 'Arial'";
 context.fillText(footerText, footerCenterX, window.innerHeight - 90); // Center the first line of footer text horizontally
 context.fillText(footerText2, footerCenterX2, window.innerHeight - 30); // Center the second line of footer text horizontally
 

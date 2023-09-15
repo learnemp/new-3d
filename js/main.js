@@ -292,6 +292,6 @@ function renderAdditionalElements(context) {
 
   context.fillStyle = "orangered"; // Set text color for footer
   context.font = "4em 'Arial'";
-  context.fillText(footerText, footerCenterX, window.innerHeight - 140); // Center the footer text horizontally
-  context.fillText(footerText2, footerCenterX2, window.innerHeight - 80); // Center the second line of footer text horizontally
+  context.fillText(footerText, footerCenterX, window.innerHeight - 120); // Center the footer text horizontally
+  context.fillText(footerText2, footerCenterX2, window.innerHeight - 60); // Center the second line of footer text horizontally
 }

@@ -256,14 +256,16 @@ function renderModelOnCanvas(context) {
 function renderAdditionalElements(context) {
   // Header
   context.fillStyle = "#ffffff"; // Set background color
-  context.fillRect(0, 0, window.innerWidth, 100); // Draw a background rectangle
+  context.fillRect(0, 0, window.innerWidth, 150); // Draw a background rectangle
 
   // Logo
   const logoImage = new Image();
-  logoImage.src = "./logo.jpg";
+  logoImage.src = "../logob.png";
   logoImage.onload = () => {
     context.drawImage(logoImage, 10, 10, 90, 90); // Adjust the position and size as needed
   };
+
+  
 
   // Header Text
   context.fillStyle = "orangered"; // Set text color
@@ -273,11 +275,11 @@ function renderAdditionalElements(context) {
   const textWidth = context.measureText(headerText).width;
   const centerX = (window.innerWidth - textWidth) / 2;
   
-  context.fillText(headerText, centerX, 60);
+  context.fillText(headerText, centerX, 90);
 
   // Footer
   context.fillStyle = "white"; // Set background color
-  context.fillRect(0, window.innerHeight - 100, window.innerWidth, 100); // Draw a background rectangle
+  context.fillRect(0, window.innerHeight - 100, window.innerWidth, 200); // Draw a background rectangle
 
   // Footer Text
   const footerText = "I support for a world where deaf people everywhere";
@@ -290,6 +292,6 @@ function renderAdditionalElements(context) {
 
   context.fillStyle = "orangered"; // Set text color for footer
   context.font = "4em 'Arial'";
-  context.fillText(footerText, footerCenterX, window.innerHeight - 60); // Center the footer text horizontally
-  context.fillText(footerText2, footerCenterX2, window.innerHeight - 20); // Center the second line of footer text horizontally
+  context.fillText(footerText, footerCenterX, window.innerHeight - 90); // Center the footer text horizontally
+  context.fillText(footerText2, footerCenterX2, window.innerHeight - 30); // Center the second line of footer text horizontally
 }

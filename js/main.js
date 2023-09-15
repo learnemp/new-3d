@@ -280,11 +280,11 @@ function renderAdditionalElements(context) {
   context.fillRect(0, window.innerHeight - 100, window.innerWidth, 100); // Draw a background rectangle
 
   // Footer Text
-  const footerText = "I support for a world where deaf people everywhere can sign anywhere!";
+  const footerText = "I support for a world where deaf people everywhere\ncan sign anywhere!";
   const footerTextWidth = context.measureText(footerText).width;
   const footerCenterX = (window.innerWidth - footerTextWidth) / 2;
 
   context.fillStyle = "orangered"; // Set text color for footer
   context.font = "3em 'Arial'"
-  context.fillText(footerText, footerCenterX, window.innerHeight - 20); // Center the footer text horizontally
+  context.fillText(footerText, footerCenterX, window.innerHeight - 50); // Center the footer text horizontally
 }

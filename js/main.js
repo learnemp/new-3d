@@ -260,14 +260,14 @@ function renderAdditionalElements(context) {
 
   // Logo
   const logoImage = new Image();
-  logoImage.src = "../logo.jpg";
+  logoImage.src = "./logo.jpg";
   logoImage.onload = () => {
     context.drawImage(logoImage, 10, 10, 90, 90); // Adjust the position and size as needed
   };
 
   // Header Text
   context.fillStyle = "orangered"; // Set text color
-  context.font = "3em 'Arial'"; // Set font size and family
+  context.font = "4em 'Arial'"; // Set font size and family
 
   const headerText = "International week for the deaf!";
   const textWidth = context.measureText(headerText).width;
@@ -286,5 +286,5 @@ function renderAdditionalElements(context) {
 
   context.fillStyle = "orangered"; // Set text color for footer
   context.font = "3em 'Arial'"
-  context.fillText(footerText, footerCenterX, window.innerHeight - 20); // Center the footer text horizontally
+  context.fillText(footerText, footerCenterX, window.innerHeight - 10); // Center the footer text horizontally
 }

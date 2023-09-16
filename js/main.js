@@ -280,7 +280,7 @@ function renderAdditionalElements(context) {
   
   // Add styles to header text
   context.shadowColor = "#333"; // Add a shadow
-  context.shadowBlur = 5;
+  context.shadowBlur = 4;
   context.fillStyle = "#FF5733"; // Change text color
   context.fillText(headerText, centerX, 90);
 

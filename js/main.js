@@ -278,6 +278,10 @@ function renderAdditionalElements(context) {
   const textWidth = context.measureText(headerText).width;
   const centerX = (window.innerWidth - textWidth) / 2;
   
+
+  // Add styles to header text
+  context.shadowColor = "white"; // Add a shadow
+  context.shadowBlur = 4;
   context.fillText(headerText, centerX, 90);
 
   // Footer
@@ -303,7 +307,8 @@ function renderAdditionalElements(context) {
   context.fillStyle = "white"; // Set text color for footer
   context.font = "5.1em 'Montserrat', sans-serif";
 
+   // Add styles to footer text
+   context.shadowColor = "white"; // Add a shadow
+   context.shadowBlur = 4;
   context.fillText(footerText, footerCenterX, window.innerHeight - 120); // Center the first line of footer text horizontally
   context.fillText(footerText2, footerCenterX2, window.innerHeight - 60); // Center the second line of footer text horizontally
-}
-

@@ -258,6 +258,11 @@ function renderAdditionalElements(context) {
   context.fillStyle = "#ffffff"; // Set background color
   context.fillRect(0, 0, window.innerWidth, 150); // Draw a background rectangle
 
+  // Add a border to the header
+  context.strokeStyle = "black"; // Set border color
+  context.lineWidth = 2; // Set border width
+  context.strokeRect(0, 0, window.innerWidth, 150); // Draw a border around the header
+
   // Logo
   const logoImage = new Image();
   logoImage.src = "../logob.png";
@@ -267,14 +272,13 @@ function renderAdditionalElements(context) {
 
   // Header Text
   context.fillStyle = "orangered"; // Set text color
-  context.font = "4em 'Arial'"; // Set font size and family
- 
+  context.font = "5em 'Montserrat', sans-serif";
 
   const headerText = "International week for the deaf!";
   const textWidth = context.measureText(headerText).width;
   const centerX = (window.innerWidth - textWidth) / 2;
   
-// Add styles to header text
+  // Add styles to header text
   context.shadowColor = "#333"; // Add a shadow
   context.shadowBlur = 5;
   context.fillStyle = "#FF5733"; // Change text color
@@ -287,9 +291,12 @@ function renderAdditionalElements(context) {
   const footerHeight = 200;
   context.fillRect(0, window.innerHeight - footerHeight, window.innerWidth, footerHeight); // Draw a background rectangle
 
+  // Add a border to the footer
+  context.strokeRect(0, window.innerHeight - footerHeight, window.innerWidth, footerHeight); // Draw a border around the footer
+
   // Footer Text
-  const footerText = "I support for a world where deaf people everywhere";
-  const footerText2 = "can sign anywhere!";
+  const footerText = "I support for a world where deaf people";
+  const footerText2 = "everywhere can sign anywhere!";
   const footerTextWidth = context.measureText(footerText).width;
   const footerText2Width = context.measureText(footerText2).width;
 
@@ -298,8 +305,7 @@ function renderAdditionalElements(context) {
   const footerCenterX2 = (window.innerWidth - footerText2Width) / 2;
 
   context.fillStyle = "orangered"; // Set text color for footer
-  context.font = "4em 'Arial'";
-
+  context.font = "5em 'Montserrat', sans-serif";
 
   // Add styles to footer text
   context.shadowColor = "#333"; // Add a shadow
@@ -308,3 +314,4 @@ function renderAdditionalElements(context) {
   context.fillText(footerText, footerCenterX, window.innerHeight - 120); // Center the first line of footer text horizontally
   context.fillText(footerText2, footerCenterX2, window.innerHeight - 60); // Center the second line of footer text horizontally
 }
+

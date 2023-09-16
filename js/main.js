@@ -259,7 +259,7 @@ function renderAdditionalElements(context) {
   context.fillRect(0, 0, window.innerWidth, 150); // Draw a background rectangle
 
   // Add a border to the header
-  context.strokeStyle = "black"; // Set border color
+  context.strokeStyle = "white"; // Set border color
   context.lineWidth = 2; // Set border width
   context.strokeRect(0, 0, window.innerWidth, 150); // Draw a border around the header
 
@@ -272,15 +272,12 @@ function renderAdditionalElements(context) {
 
   // Header Text
   context.fillStyle = "white"; // Set text color
-  context.font = "5.1em 'Arial'"; // Set font size and family
+  context.font = "5.1em 'Montserrat', sans-serif"; // Set font size and family
 
   const headerText = "International week for the deaf!";
   const textWidth = context.measureText(headerText).width;
   const centerX = (window.innerWidth - textWidth) / 2;
   
-  // Add styles to header text
-  context.shadowColor = "#333"; // Add a shadow
-  context.shadowBlur = 5;
   context.fillText(headerText, centerX, 90);
 
   // Footer
@@ -304,11 +301,8 @@ function renderAdditionalElements(context) {
   const footerCenterX2 = (window.innerWidth - footerText2Width) / 2;
 
   context.fillStyle = "white"; // Set text color for footer
-  context.font = "5.1em 'Arial'";
+  context.font = "5.1em 'Montserrat', sans-serif";
 
-  // Add styles to footer text
-  context.shadowColor = "#333"; // Add a shadow
-  context.shadowBlur = 5;
   context.fillText(footerText, footerCenterX, window.innerHeight - 120); // Center the first line of footer text horizontally
   context.fillText(footerText2, footerCenterX2, window.innerHeight - 60); // Center the second line of footer text horizontally
 }

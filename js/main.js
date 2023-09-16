@@ -312,3 +312,5 @@ function renderAdditionalElements(context) {
    context.shadowBlur = 4;
   context.fillText(footerText, footerCenterX, window.innerHeight - 120); // Center the first line of footer text horizontally
   context.fillText(footerText2, footerCenterX2, window.innerHeight - 60); // Center the second line of footer text horizontally
+}
+

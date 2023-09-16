@@ -268,7 +268,7 @@ function renderAdditionalElements(context) {
   // Header Text
   context.fillStyle = "orangered"; // Set text color
   context.font = "4em 'Arial'"; // Set font size and family
-  context.textAlign = "center"; // Center align text
+ 
 
   const headerText = "International week for the deaf!";
   const textWidth = context.measureText(headerText).width;
@@ -299,7 +299,7 @@ function renderAdditionalElements(context) {
 
   context.fillStyle = "orangered"; // Set text color for footer
   context.font = "4em 'Arial'";
-  context.textAlign = "center"; // Center align text
+
 
   // Add styles to footer text
   context.shadowColor = "#333"; // Add a shadow

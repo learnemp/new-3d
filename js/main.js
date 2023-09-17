@@ -238,22 +238,22 @@ function captureScreenshot() {
   if (videoAspectRatio > canvasAspectRatio) {
     // Video is wider than the canvas
     drawWidth = window.innerWidth;
-    drawHeight = window.innerWidth / videoAspectRatio;
+    drawHeight = (window.innerWidth / videoAspectRatio) - 150; // Subtract header height
     xOffset = 0;
-    yOffset = (window.innerHeight - 150 - drawHeight) / 2; // Subtract header height
+    yOffset = 150; // Header height
   } else {
     // Video is taller than the canvas
-    drawWidth = (window.innerHeight - 150) * videoAspectRatio; // Subtract header height
     drawHeight = window.innerHeight - 150; // Subtract header height
+    drawWidth = drawHeight * videoAspectRatio;
     xOffset = (window.innerWidth - drawWidth) / 2;
-    yOffset = 0;
+    yOffset = 150; // Header height
   }
 
   // Draw the camera feed while maintaining aspect ratio
   screenshotContext.drawImage(
     videoElement,
     xOffset,
-    yOffset + 150, // Add header height
+    yOffset,
     drawWidth,
     drawHeight
   );

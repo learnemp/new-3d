@@ -229,8 +229,34 @@ function captureScreenshot() {
   // Clear the screenshot canvas
   screenshotContext.clearRect(0, 0, screenshotCanvas.width, screenshotCanvas.height);
 
-  // Render the camera feed
-  screenshotContext.drawImage(videoElement, 0, 0, window.innerWidth, window.innerHeight);
+  // Calculate the dimensions to maintain aspect ratio
+  const videoAspectRatio = videoElement.videoWidth / videoElement.videoHeight;
+  const canvasAspectRatio = window.innerWidth / window.innerHeight;
+
+  let drawWidth, drawHeight, xOffset, yOffset;
+
+  if (videoAspectRatio > canvasAspectRatio) {
+    // Video is wider than the canvas
+    drawWidth = window.innerWidth;
+    drawHeight = window.innerWidth / videoAspectRatio;
+    xOffset = 0;
+    yOffset = (window.innerHeight - drawHeight) / 2;
+  } else {
+    // Video is taller than the canvas
+    drawWidth = window.innerHeight * videoAspectRatio;
+    drawHeight = window.innerHeight;
+    xOffset = (window.innerWidth - drawWidth) / 2;
+    yOffset = 0;
+  }
+
+  // Draw the camera feed while maintaining aspect ratio
+  screenshotContext.drawImage(
+    videoElement,
+    xOffset,
+    yOffset,
+    drawWidth,
+    drawHeight
+  );
 
   // Render the 3D model
   renderModelOnCanvas(screenshotContext);
@@ -248,6 +274,7 @@ function captureScreenshot() {
   window.URL.revokeObjectURL(a.href);
   document.body.removeChild(a);
 }
+
 
 
 // Function to render the model on the given canvas context

@@ -253,7 +253,7 @@ function captureScreenshot() {
   screenshotContext.drawImage(
     videoElement,
     xOffset,
-    yOffset - 120, // Add header height
+    yOffset - 20, // Add header height
     drawWidth,
     drawHeight
   );

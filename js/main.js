@@ -240,11 +240,11 @@ function captureScreenshot() {
     drawWidth = window.innerWidth;
     drawHeight = window.innerWidth / videoAspectRatio;
     xOffset = 0;
-    yOffset = (window.innerHeight + 50 - drawHeight) / 2; // Subtract header height
+    yOffset = (window.innerHeight + 20 - drawHeight) / 2; // Subtract header height
   } else {
     // Video is taller than the canvas
-    drawWidth = (window.innerHeight + 50) * videoAspectRatio; // Subtract header height
-    drawHeight = window.innerHeight + 50; // Subtract header height
+    drawWidth = (window.innerHeight + 20) * videoAspectRatio; // Subtract header height
+    drawHeight = window.innerHeight + 20; // Subtract header height
     xOffset = (window.innerWidth - drawWidth) / 2;
     yOffset = 0;
   }
@@ -253,7 +253,7 @@ function captureScreenshot() {
   screenshotContext.drawImage(
     videoElement,
     xOffset,
-    yOffset - 150, // Add header height
+    yOffset - 120, // Add header height
     drawWidth,
     drawHeight
   );

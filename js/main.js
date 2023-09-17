@@ -231,7 +231,7 @@ function captureScreenshot() {
 
   // Calculate the dimensions to maintain aspect ratio
   const videoAspectRatio = videoElement.videoWidth / videoElement.videoHeight;
-  const canvasAspectRatio = window.innerWidth / (window.innerHeight - 150); // Subtract header height
+  const canvasAspectRatio = window.innerWidth / (window.innerHeight - 50); // Subtract header height
 
   let drawWidth, drawHeight, xOffset, yOffset;
 
@@ -240,11 +240,11 @@ function captureScreenshot() {
     drawWidth = window.innerWidth;
     drawHeight = window.innerWidth / videoAspectRatio;
     xOffset = 0;
-    yOffset = (window.innerHeight - 150 - drawHeight) / 2; // Subtract header height
+    yOffset = (window.innerHeight - 50 - drawHeight) / 2; // Subtract header height
   } else {
     // Video is taller than the canvas
-    drawWidth = (window.innerHeight - 150) * videoAspectRatio; // Subtract header height
-    drawHeight = window.innerHeight - 150; // Subtract header height
+    drawWidth = (window.innerHeight - 50) * videoAspectRatio; // Subtract header height
+    drawHeight = window.innerHeight - 50; // Subtract header height
     xOffset = (window.innerWidth - drawWidth) / 2;
     yOffset = 0;
   }
@@ -253,7 +253,7 @@ function captureScreenshot() {
   screenshotContext.drawImage(
     videoElement,
     xOffset,
-    yOffset + 150, // Add header height
+    yOffset + 50, // Add header height
     drawWidth,
     drawHeight
   );

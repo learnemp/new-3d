@@ -90,6 +90,7 @@ footer h1 {
 #buttonContainerBottom img {
   width: 100px; /* Adjust the size of the images as needed */
   height: 100px;
+  margin: 0 30px;
 }
 
 

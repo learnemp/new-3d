@@ -264,6 +264,12 @@ function captureScreenshot() {
   // Render additional elements (header and footer)
   renderAdditionalElements(screenshotContext);
 
+  // Get the logo image element
+  const logoImage = document.getElementById('logoImage');
+
+   // Draw the logo image on top of the screenshot
+   screenshotContext.drawImage(logoImage, 10, 10, 90, 90); // Adjust the position and size as needed
+
   // Create a download link for the screenshot
   const a = document.createElement('a');
   a.href = screenshotCanvas.toDataURL('image/png');
@@ -291,16 +297,16 @@ function renderModelOnCanvas(context) {
 function renderAdditionalElements(context) {
   // Header
   context.fillStyle = "red"; // Set background color
-  context.fillRect(0, 0, window.innerWidth, 150); // Draw a background rectangle
+  context.fillRect(0, 0, window.innerWidth, 250); // Draw a background rectangle
 
   // Add a border to the header
   context.strokeStyle = "white"; // Set border color
   context.lineWidth = 2; // Set border width
-  context.strokeRect(0, 0, window.innerWidth, 150); // Draw a border around the header
+  context.strokeRect(0, 0, window.innerWidth, 250); // Draw a border around the header
 
   // Logo
   const logoImage = new Image();
-  logoImage.src = "../logob.png";
+  logoImage.src = "./logob.jpg";
   logoImage.onload = () => {
     context.drawImage(logoImage, 10, 10, 90, 90); // Adjust the position and size as needed
   };
@@ -312,22 +318,24 @@ function renderAdditionalElements(context) {
   const headerText = "International week for the deaf!";
   const textWidth = context.measureText(headerText).width;
   const centerX = (window.innerWidth - textWidth) / 2;
-  
 
   // Add styles to header text
   context.shadowColor = "white"; // Add a shadow
   context.shadowBlur = 4;
-  context.fillText(headerText, centerX, 90);
+  context.fillText(headerText, centerX, 150);
 
   // Footer
-  context.fillStyle = "red"; // Set background color
+  const gradient = context.createLinearGradient(0, 0, 0, window.innerHeight);
+  gradient.addColorStop(0, "#09203f");
+  gradient.addColorStop(1, "#537895");
 
-  // Increase the height of the footer
-  const footerHeight = 200;
-  context.fillRect(0, window.innerHeight - footerHeight, window.innerWidth, footerHeight); // Draw a background rectangle
+  context.fillStyle = gradient; // Set gradient as the background
+  context.fillRect(0, window.innerHeight - 270, window.innerWidth, 270); // Draw a background rectangle
 
   // Add a border to the footer
-  context.strokeRect(0, window.innerHeight - footerHeight, window.innerWidth, footerHeight); // Draw a border around the footer
+  context.strokeStyle = "white"; // Set border color
+  context.lineWidth = 2; // Set border width
+  context.strokeRect(0, window.innerHeight - 270, window.innerWidth, 270); // Draw a border around the footer
 
   // Footer Text
   const footerText = "I support for a world where deaf people";
@@ -342,10 +350,9 @@ function renderAdditionalElements(context) {
   context.fillStyle = "white"; // Set text color for footer
   context.font = "5.1em 'Montserrat', sans-serif";
 
-   // Add styles to footer text
-   context.shadowColor = "white"; // Add a shadow
-   context.shadowBlur = 4;
-  context.fillText(footerText, footerCenterX, window.innerHeight - 120); // Center the first line of footer text horizontally
-  context.fillText(footerText2, footerCenterX2, window.innerHeight - 60); // Center the second line of footer text horizontally
+  // Add styles to footer text
+  context.shadowColor = "white"; // Add a shadow
+  context.shadowBlur = 4;
+  context.fillText(footerText, footerCenterX, window.innerHeight - 160); // Center the first line of footer text horizontally
+  context.fillText(footerText2, footerCenterX2, window.innerHeight - 80); // Center the second line of footer text horizontally
 }
-
